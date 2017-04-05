@@ -2,13 +2,11 @@ currentTracker = undefined
 
 @openRoom = (type, name) ->
 	Session.set 'openedRoom', null
-
 	Meteor.defer ->
 		currentTracker = Tracker.autorun (c) ->
 			if RoomManager.open(type + name).ready() isnt true
 				BlazeLayout.render 'main', { modal: RocketChat.Layout.isEmbedded(), center: 'loading' }
 				return
-
 			user = Meteor.user()
 			unless user?.username
 				return
@@ -27,9 +25,19 @@ currentTracker = undefined
 							Session.set 'roomNotFound', {type: type, name: name}
 							BlazeLayout.render 'main', {center: 'roomNotFound'}
 							return
+				else if type is 'th'
+					console.log "this type is #{type}"
+#					console.log RocketChat.models.Rooms.find({t: type}).fetch()
+#					RocketChat.models.Rooms.findByType(type)
+					Meteor.call 'getThreads', type, (err, rec) ->
+						if err?
+							console.log type, 'err'
+							Session.set 'roomNotFound', {type: type, name: name}
+							BlazeLayout.render 'main', {center: 'roomNotFound'}
 				else
 					Meteor.call 'getRoomByTypeAndName', type, name, (err, record) ->
 						if err?
+							console.log  type, 'err'
 							Session.set 'roomNotFound', {type: type, name: name}
 							BlazeLayout.render 'main', {center: 'roomNotFound'}
 						else

@@ -73,8 +73,10 @@ RocketChat.roomTypes.add('d', 20, {
 	},
 
 	getUserStatus(roomId) {
-		const subscription = RocketChat.models.Subscriptions.findOne({rid: roomId});
-		if (subscription == null) { return; }
+		const subscription = RocketChat.models.Subscriptions.findOne({ rid: roomId });
+		if (subscription == null) {
+			return;
+		}
 
 		return Session.get(`user_${ subscription.name }_status`);
 	}
@@ -95,6 +97,34 @@ RocketChat.roomTypes.add('p', 30, {
 		const query = {
 			t: 'p',
 			name: identifier
+		};
+		return ChatRoom.findOne(query);
+	},
+
+	roomName(roomData) {
+		return roomData.name;
+	},
+
+	condition() {
+		return RocketChat.authz.hasAllPermission('view-p-room');
+	}
+});
+
+RocketChat.roomTypes.add('th', 40, {
+	template: 'allThreads',
+	icon: 'icon-lock',
+	route: {
+		name: 'threads',
+		path: '/threads/:username',
+		action(params) {
+			return openRoom('th', params.username);
+		}
+	},
+
+	findRoom(identifier) {
+		const query = {
+			t: 'th',
+			_id: identifier
 		};
 		return ChatRoom.findOne(query);
 	},

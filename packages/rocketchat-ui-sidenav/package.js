@@ -36,6 +36,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/toolbar.html', 'client');
 	api.addFiles('client/unreadRooms.html', 'client');
 	api.addFiles('client/userStatus.html', 'client');
+	api.addFiles('client/allThreads.html', 'client');
 
 	api.addFiles('client/accountBox.js', 'client');
 	api.addFiles('client/combined.js', 'client');
@@ -52,4 +53,5 @@ Package.onUse(function(api) {
 	api.addFiles('client/starredRooms.js', 'client');
 	api.addFiles('client/toolbar.js', 'client');
 	api.addFiles('client/unreadRooms.js', 'client');
+	api.addFiles('client/allThreads.js', 'client');
 });

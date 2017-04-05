@@ -59,7 +59,6 @@ Meteor.methods({
 		}
 
 		const roomFind = RocketChat.roomTypes.getRoomFind(type);
-
 		let room;
 
 		if (roomFind) {
@@ -77,6 +76,28 @@ Meteor.methods({
 		}
 
 		return roomMap({_room: room});
+	},
+	getThreads(type) {
+		if (!Meteor.userId()) {
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getRoomByTypeAndName' });
+		}
+		const me = Meteor.user();
+		const room = RocketChat.models.Rooms.find({
+			usernames: {
+				$in: me.username
+			}
+		}).fetch();
+		console.log(room, 'room');
+		// const room = {
+		// 	t: type,
+		// 	msgs: 0,
+		// 	ts: new Date(),
+		// 	thMsgId: 'KJHSjh7b7sdUhg7',
+		// 	usernames: [me.username]
+		// };
+		// RocketChat.models.Rooms.insert(room);
+		// const roomFind = RocketChat.roomTypes.getRoomFind(type);
+		// console.log(roomFind, 'findRoom');
 	}
 });
 
