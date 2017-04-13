@@ -4,6 +4,7 @@ RocketChat.roomTypes = new class roomTypesServer extends roomTypesCommon
 	@param callback: function that will return the publish's data
 	###
 	setPublish: (roomType, callback) ->
+		console.log(@roomTypes[roomType]?.publish?, 'room type of publish');
 		if @roomTypes[roomType]?.publish?
 			throw new Meteor.Error 'route-publish-exists', 'Publish for the given type already exists'
 

@@ -15,6 +15,7 @@ currentTracker = undefined
 			c.stop()
 
 			room = RocketChat.roomTypes.findRoom(type, name, user)
+			console.log(room, 'room type');
 			if not room?
 				if type is 'd'
 					Meteor.call 'createDirectMessage', name, (err) ->
@@ -26,14 +27,12 @@ currentTracker = undefined
 							BlazeLayout.render 'main', {center: 'roomNotFound'}
 							return
 				else if type is 'th'
-					console.log "this type is #{type}"
-#					console.log RocketChat.models.Rooms.find({t: type}).fetch()
-#					RocketChat.models.Rooms.findByType(type)
-					Meteor.call 'getThreads', type, (err, rec) ->
-						if err?
-							console.log type, 'err'
-							Session.set 'roomNotFound', {type: type, name: name}
-							BlazeLayout.render 'main', {center: 'roomNotFound'}
+					BlazeLayout.render 'main', {center: 'threads'}
+#					Meteor.call 'getThreads', type, (err, rec) ->
+#						if err?
+#							console.log type, 'err'
+#							Session.set 'roomNotFound', {type: type, name: name}
+#							BlazeLayout.render 'main', {center: 'roomNotFound'}
 				else
 					Meteor.call 'getRoomByTypeAndName', type, name, (err, record) ->
 						if err?
@@ -52,6 +51,7 @@ currentTracker = undefined
 			if mainNode?
 				for child in mainNode.children
 					mainNode.removeChild child if child?
+
 				roomDom = RoomManager.getDomOfRoom(type + name, room._id)
 				mainNode.appendChild roomDom
 				if roomDom.classList.contains('room-container')

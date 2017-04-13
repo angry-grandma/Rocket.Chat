@@ -106,6 +106,32 @@ Meteor.startup ->
 		order: 1
 
 	RocketChat.MessageAction.addButton
+		id: 'retweet-msg'
+		icon: 'icon-retweet'
+		i18nLabel: 'New_Thread'
+		context: [
+			'message'
+			'message-mobile'
+		]
+		action: (event, instance) ->
+			message = @_arguments[1]
+			console.log(@_arguments, 'thread')
+#			message = @_arguments[1]
+#			input = instance.find('.input-message')
+#			url = RocketChat.MessageAction.getPermaLink(message._id)
+#			text = '[ ](' + url + ') @' + message.u.username + ' '
+#			if input.value
+#				input.value += if input.value.endsWith(' ') then '' else ' '
+#			input.value += text
+#			input.focus()
+#			RocketChat.MessageAction.hideDropDown()
+		validation: (message) ->
+			if not RocketChat.models.Subscriptions.findOne({ rid: message.rid })?
+				return false
+			return true
+		order: 1
+
+	RocketChat.MessageAction.addButton
 		id: 'edit-message'
 		icon: 'icon-pencil'
 		i18nLabel: 'Edit'

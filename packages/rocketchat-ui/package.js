@@ -93,6 +93,7 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/app/videoCall/videoButtons.html', 'client');
 	api.addFiles('client/views/app/videoCall/videoCall.html', 'client');
 	api.addFiles('client/views/app/photoswipe.html', 'client');
+	api.addFiles('client/views/app/threads.html', 'client');
 
 	api.addFiles('client/views/cmsPage.coffee', 'client');
 	api.addFiles('client/views/fxos.coffee', 'client');
@@ -108,4 +109,5 @@ Package.onUse(function(api) {
 	api.addFiles('client/views/app/videoCall/videoButtons.coffee', 'client');
 	api.addFiles('client/views/app/videoCall/videoCall.coffee', 'client');
 	api.addFiles('client/views/app/photoswipe.js', 'client');
+	api.addFiles('client/views/app/threads.js', 'client');
 });

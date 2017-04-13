@@ -79,15 +79,19 @@ Meteor.methods({
 	},
 	getThreads(type) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getRoomByTypeAndName' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getThreads' });
 		}
 		const me = Meteor.user();
 		const room = RocketChat.models.Rooms.find({
+			t: type,
 			usernames: {
 				$in: me.username
 			}
 		}).fetch();
-		console.log(room, 'room');
+		if (room.length) {
+			return roomMap({_room: room});
+		}
+		// console.log(room, 'room');
 		// const room = {
 		// 	t: type,
 		// 	msgs: 0,
@@ -116,3 +120,6 @@ RocketChat.models.Subscriptions.on('changed', (type, subscription/*, diff*/) => 
 		}
 	}
 });
+
+
+

@@ -31,7 +31,6 @@ Meteor.startup(function() {
 				return RocketChat.models.Rooms.findById(roomId[0].rid, options);
 			}
 		}
-
 		return this.ready();
 	});
 
@@ -61,6 +60,24 @@ Meteor.startup(function() {
 		});
 
 		return RocketChat.models.Rooms.findByTypeAndNameContainingUsername('p', identifier, user.username, options);
+	});
+
+	RocketChat.roomTypes.setPublish('th', () => {
+		const user = RocketChat.models.Users.findOneById(this.userId, {
+			fields: {
+				username: 1
+			}
+		});
+		return RocketChat.models.Rooms.findByTypeContainingUsernames('th', user.username, {
+			fields: {
+				thMsgId: 1,
+				t: 1,
+				cl: 1,
+				u: 1,
+				usernames: 1,
+				v: 1
+			}
+		});
 	});
 
 	return RocketChat.roomTypes.setPublish('d', function(identifier) {

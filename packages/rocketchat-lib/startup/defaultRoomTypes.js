@@ -110,7 +110,7 @@ RocketChat.roomTypes.add('p', 30, {
 	}
 });
 
-RocketChat.roomTypes.add('th', 40, {
+RocketChat.roomTypes.add('th', 1, {
 	template: 'allThreads',
 	icon: 'icon-lock',
 	route: {
@@ -122,10 +122,12 @@ RocketChat.roomTypes.add('th', 40, {
 	},
 
 	findRoom(identifier) {
+		// console.log(username, '1 args');
+		// console.log(user, '2 args');
 		const query = {
-			t: 'th',
-			_id: identifier
+			t: 'th'
 		};
+		// console.log(ChatRoom.find().fetch(), 'chatroom');
 		return ChatRoom.findOne(query);
 	},
 
